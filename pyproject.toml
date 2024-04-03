@@ -8,6 +8,8 @@ readme = "README.md"
 [tool.poetry.dependencies]
 python = "^3.11"
 ollama = "^0.1.8"
+langchain-community = "^0.0.31"
+faiss-cpu = "^1.8.0"
 
 
 [build-system]

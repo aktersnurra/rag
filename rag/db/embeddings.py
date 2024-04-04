@@ -1,15 +1,15 @@
+import os
 from typing import Tuple
+
 import faiss
 import numpy as np
 
-# TODO: read from .env
-EMBEDDING_DIM = 1024
-
 
 # TODO: inner product distance metric?
-class VectorStore:
+class Embeddings:
     def __init__(self):
-        self.index = faiss.IndexFlatL2(EMBEDDING_DIM)
+        self.dim = os.environ["EMBEDDING_DIM"]
+        self.index = faiss.IndexFlatL2(self.dim)
         # TODO: load from file
 
     def add(self, embeddings: np.ndarray):

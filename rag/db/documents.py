@@ -1,6 +1,7 @@
+import hashlib
 import os
 from typing import List
-import hashlib
+
 import psycopg
 from langchain_core.documents.base import Document
 

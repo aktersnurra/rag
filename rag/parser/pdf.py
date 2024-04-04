@@ -1,16 +1,14 @@
+import os
 from pathlib import Path
-from langchain_community.document_loaders import PyPDFLoader
-from langchain.text_splitter import RecursiveCharacterTextSplitter
 
-CHUNK_SIZE = 1024
-CHUNK_OVERLAP = 256
+from langchain.text_splitter import RecursiveCharacterTextSplitter
+from langchain_community.document_loaders import PyPDFLoader
 
 
 def parser(filepath: Path):
     content = PyPDFLoader(filepath).load()
-    print(content)
     splitter = RecursiveCharacterTextSplitter(
-        chunk_size=CHUNK_SIZE, chunk_overlap=CHUNK_OVERLAP
+        chunk_size=os.environ["CHUNK_SIZE"], chunk_overlap=os.environ["CHUNK_OVERLAP"]
     )
     chunks = splitter.split_documents(content)
     return chunks

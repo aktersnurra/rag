@@ -8,7 +8,7 @@ from langchain_core.documents.base import Document
 TABLES = """
 CREATE TABLE IF NOT EXISTS chunk (
         id serial PRIMARY KEY,
-        data text)
+        data text);
 
 CREATE TABLE IF NOT EXISTS document (
         hash text PRIMARY KEY)
@@ -18,7 +18,7 @@ CREATE TABLE IF NOT EXISTS document (
 class Documents:
     def __init__(self) -> None:
         self.conn = psycopg.connect(
-            f"dbname={os.environ['RAG_DB_NAME']} user={os.environ['RAG_USER']}"
+            f"dbname={os.environ['RAG_DB_NAME']} user={os.environ['RAG_DB_USER']}"
         )
         self.__create_content_table()
 
@@ -43,7 +43,7 @@ class Documents:
                         WHERE
                         hash = %s
                         """,
-                hash,
+                (hash,),
             )
             exist = cur.fetchone()
             if exist is None:
@@ -53,11 +53,23 @@ class Documents:
                             (hash) VALUES 
                             (%s)
                             """,
-                    hash,
+                    (hash,),
                 )
             self.conn.commit()
         return exist is not None
 
+    def add_chunks(self, chunks: List[Document]):
+        data = [(chunk,) for chunk in chunks]
+        with self.conn.cursor() as cur:
+            cur.executemany(
+                """
+                        INSERT INTO chunk 
+                        (data) VALUES 
+                        (%s)
+                        """,
+                data,
+            )
+            self.conn.commit()
 
     def add_chunk(self, data: str):
         with self.conn.cursor() as cur:
@@ -67,7 +79,7 @@ class Documents:
                         (data) VALUES 
                         (%s)
                         """,
-                data,
+                (data,),
             )
             self.conn.commit()
 
@@ -79,7 +91,7 @@ class Documents:
                         WHERE
                         id = %s
                         """,
-                str(id),
+                (str(id),),
             )
             chunk = cur.fetchone()
             self.conn.commit()

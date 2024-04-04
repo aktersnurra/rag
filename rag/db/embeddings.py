@@ -8,7 +8,7 @@ import numpy as np
 # TODO: inner product distance metric?
 class Embeddings:
     def __init__(self):
-        self.dim = os.environ["EMBEDDING_DIM"]
+        self.dim = int(os.environ["EMBEDDING_DIM"])
         self.index = faiss.IndexFlatL2(self.dim)
         # TODO: load from file
 

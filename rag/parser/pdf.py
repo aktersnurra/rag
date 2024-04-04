@@ -8,7 +8,8 @@ from langchain_community.document_loaders import PyPDFLoader
 def parser(filepath: Path):
     content = PyPDFLoader(filepath).load()
     splitter = RecursiveCharacterTextSplitter(
-        chunk_size=os.environ["CHUNK_SIZE"], chunk_overlap=os.environ["CHUNK_OVERLAP"]
+        chunk_size=int(os.environ["CHUNK_SIZE"]),
+        chunk_overlap=int(os.environ["CHUNK_OVERLAP"]),
     )
     chunks = splitter.split_documents(content)
     return chunks

@@ -75,20 +75,28 @@ print(I[:5])                   # neighbors of the 5 first queries
 print(I[-5:])                  # neighbors of the 5 last queries
 ```
 
-I need to figure out the vector dim of the mxbai model.
+I need to figure out the vector dim of the mxbai model. -> 1024
 
 4. Use Postgres as a persisted kv-store
 
 Save index of chunk as key and value as paragraph.
 
 5. Create user input pipeline
+
 5.1 Create search prompt for document retrieval
+
 5.2 Fetch nearest neighbors as context
+
 5.3 Retrieve the values from the document db
+
 5.4 Add paragraphs as context to the query
+
 5.5 Send query to LLM
+
 5.6 Return output
+
 5.7 ....
+
 5.8 Profit
 
 ### Frontend (Low priority)

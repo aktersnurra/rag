@@ -2,10 +2,10 @@ import os
 from dataclasses import dataclass
 from typing import Dict, List
 
+from loguru import logger as log
 from qdrant_client import QdrantClient
 from qdrant_client.http.models import StrictFloat
-from qdrant_client.models import Distance, ScoredPoint, VectorParams, PointStruct
-from loguru import logger as log
+from qdrant_client.models import Distance, PointStruct, ScoredPoint, VectorParams
 
 
 @dataclass
@@ -15,7 +15,7 @@ class Point:
     payload: Dict[str, str]
 
 
-class Vectors:
+class VectorDB:
     def __init__(self):
         self.dim = int(os.environ["EMBEDDING_DIM"])
         self.collection_name = os.environ["QDRANT_COLLECTION_NAME"]
@@ -23,7 +23,9 @@ class Vectors:
         self.__configure()
 
     def __configure(self):
-        collections = list(map(lambda col: col.name, self.client.get_collections()))
+        collections = list(
+            map(lambda col: col.name, self.client.get_collections().collections)
+        )
         if self.collection_name not in collections:
             log.debug(f"Configuring collection {self.collection_name}...")
             self.client.create_collection(

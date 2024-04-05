@@ -12,7 +12,7 @@ CREATE TABLE IF NOT EXISTS document (
 """
 
 
-class Documents:
+class DocumentDB:
     def __init__(self) -> None:
         self.conn = psycopg.connect(
             f"dbname={os.environ['RAG_DB_NAME']} user={os.environ['RAG_DB_USER']}"

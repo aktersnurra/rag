@@ -6,10 +6,6 @@ import psycopg
 from langchain_core.documents.base import Document
 
 TABLES = """
-CREATE TABLE IF NOT EXISTS chunk (
-        id serial PRIMARY KEY,
-        data text);
-
 CREATE TABLE IF NOT EXISTS document (
         hash text PRIMARY KEY)
 """
@@ -57,42 +53,3 @@ class Documents:
                 )
             self.conn.commit()
         return exist is not None
-
-    def add_chunks(self, chunks: List[Document]):
-        data = [(chunk,) for chunk in chunks]
-        with self.conn.cursor() as cur:
-            cur.executemany(
-                """
-                        INSERT INTO chunk 
-                        (data) VALUES 
-                        (%s)
-                        """,
-                data,
-            )
-            self.conn.commit()
-
-    def add_chunk(self, data: str):
-        with self.conn.cursor() as cur:
-            cur.execute(
-                """
-                        INSERT INTO chunk 
-                        (data) VALUES 
-                        (%s)
-                        """,
-                (data,),
-            )
-            self.conn.commit()
-
-    def get_chunk(self, id: int):
-        with self.conn.cursor() as cur:
-            cur.execute(
-                """
-                        SELECT * FROM chunk 
-                        WHERE
-                        id = %s
-                        """,
-                (str(id),),
-            )
-            chunk = cur.fetchone()
-            self.conn.commit()
-        return chunk

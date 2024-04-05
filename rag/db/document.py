@@ -29,12 +29,11 @@ class DocumentDB:
             self.conn.commit()
 
     def __hash(self, chunks: List[Document]) -> str:
-        log.debug("Generating sha256 hash for pdf document")
+        log.debug("Generating sha256 hash of the chunks")
         document = str.encode("".join([chunk.page_content for chunk in chunks]))
         return hashlib.sha256(document).hexdigest()
 
     def add(self, chunks: List[Document]) -> bool:
-        log.debug("Inserting document hash into documents db...")
         with self.conn.cursor() as cur:
             hash = self.__hash(chunks)
             cur.execute(
@@ -47,6 +46,7 @@ class DocumentDB:
             )
             exist = cur.fetchone()
             if exist is None:
+                log.debug("Inserting document hash into documents db...")
                 cur.execute(
                     """
                             INSERT INTO document 

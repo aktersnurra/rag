@@ -33,7 +33,7 @@ class DocumentDB:
         document = str.encode("".join([chunk.page_content for chunk in chunks]))
         return hashlib.sha256(document).hexdigest()
 
-    def add_document(self, chunks: List[Document]) -> bool:
+    def add(self, chunks: List[Document]) -> bool:
         log.debug("Inserting document hash into documents db...")
         with self.conn.cursor() as cur:
             hash = self.__hash(chunks)

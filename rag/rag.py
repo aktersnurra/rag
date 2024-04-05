@@ -22,7 +22,7 @@ class RAG:
 
     def add_pdf(self, filepath: Path):
         chunks = pdf.parser(filepath)
-        added = self.document_db.add_document(chunks)
+        added = self.document_db.add(chunks)
         if added:
             log.debug(f"Adding pdf with filepath: {filepath} to vector db")
             points = self.encoder.encode_document(chunks)

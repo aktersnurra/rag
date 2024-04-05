@@ -27,6 +27,8 @@ class RAG:
             log.debug(f"Adding pdf with filepath: {filepath} to vector db")
             points = self.encoder.encode_document(chunks)
             self.vector_db.add(points)
+        else:
+            log.debug("Document already exists!")
 
     def __context(self, query_emb: List[StrictFloat], limit: int) -> str:
         hits = self.vector_db.search(query_emb, limit)

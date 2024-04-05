@@ -56,4 +56,4 @@ class DocumentDB:
                     (hash,),
                 )
             self.conn.commit()
-        return exist is not None
+        return exist is None

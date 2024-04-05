@@ -29,7 +29,7 @@ class DocumentDB:
             self.conn.commit()
 
     def __hash(self, chunks: List[Document]) -> str:
-        log.debug("Generating sha256 hash of the chunks")
+        log.debug("Hashing document...")
         document = str.encode("".join([chunk.page_content for chunk in chunks]))
         return hashlib.sha256(document).hexdigest()
 

@@ -31,5 +31,4 @@ class Generator:
     def generate(self, prompt: Prompt, role: str) -> str:
         log.debug("Generating answer...")
         metaprompt = self.__metaprompt(role, prompt)
-        print(f"metaprompt = \n{metaprompt}")
         return ollama.generate(model=self.model, prompt=metaprompt)

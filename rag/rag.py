@@ -1,12 +1,15 @@
+from pathlib import Path
 from typing import List
 
 from dotenv import load_dotenv
 from loguru import logger as log
 from qdrant_client.models import StrictFloat
 
+from rag.db.document import DocumentDB
 from rag.db.vector import VectorDB
 from rag.llm.encoder import Encoder
 from rag.llm.generator import Generator, Prompt
+from rag.parser import pdf
 
 
 class RAG:
@@ -15,6 +18,17 @@ class RAG:
         self.generator = Generator()
         self.encoder = Encoder()
         self.vector_db = VectorDB()
+
+    # FIXME: refactor this, add vector?
+    def add_pdf(self, filepath: Path):
+        chunks = pdf.parser(filepath)
+        added = self.document_db.add(chunks)
+        if added:
+            log.debug(f"Adding pdf with filepath: {filepath} to vector db")
+            points = self.encoder.encode_document(chunks)
+            self.vector_db.add(points)
+        else:
+            log.debug("Document already exists!")
 
     def __context(self, query_emb: List[StrictFloat], limit: int) -> str:
         hits = self.vector_db.search(query_emb, limit)

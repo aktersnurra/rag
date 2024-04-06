@@ -14,6 +14,7 @@ from rag.parser import pdf
 
 class RAG:
     def __init__(self) -> None:
+        # FIXME: load this somewhere else?
         load_dotenv()
         self.generator = Generator()
         self.encoder = Encoder()

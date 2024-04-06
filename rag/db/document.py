@@ -1,9 +1,7 @@
 import hashlib
 import os
-from typing import List
 
 import psycopg
-from langchain_core.documents.base import Document
 from loguru import logger as log
 
 TABLES = """
@@ -28,14 +26,13 @@ class DocumentDB:
             cur.execute(TABLES)
             self.conn.commit()
 
-    def __hash(self, chunks: List[Document]) -> str:
+    def __hash(self, blob: bytes) -> str:
         log.debug("Hashing document...")
-        document = str.encode("".join([chunk.page_content for chunk in chunks]))
-        return hashlib.sha256(document).hexdigest()
+        return hashlib.sha256(blob).hexdigest()
 
-    def add(self, chunks: List[Document]) -> bool:
+    def add(self, blob: bytes) -> bool:
         with self.conn.cursor() as cur:
-            hash = self.__hash(chunks)
+            hash = self.__hash(blob)
             cur.execute(
                 """
                         SELECT * FROM document 

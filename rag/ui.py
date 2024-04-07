@@ -22,6 +22,7 @@ def upload_pdfs():
 
 
 if __name__ == "__main__":
+    ss = st.session_state
     st.header("RAG-UI")
 
     upload_pdfs()
@@ -35,10 +36,13 @@ if __name__ == "__main__":
         disabled=False,
     )
 
+    (b,) = st.columns(1)
     (result_column, context_column) = st.columns(2)
 
-    if query:
-        response = rag.retrive(query)
+    if b.button("Generate", disabled=False, type="primary", use_container_width=True):
+        query = ss.get("query", "")
+        with st.spinner("Generating answer..."):
+            response = rag.retrieve(query)
 
         with result_column:
             st.markdown("### Answer")

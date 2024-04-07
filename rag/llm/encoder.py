@@ -1,5 +1,5 @@
 import os
-from typing import List
+from typing import Iterator, List
 from uuid import uuid4
 
 import ollama
@@ -7,8 +7,11 @@ from langchain_core.documents import Document
 from loguru import logger as log
 from qdrant_client.http.models import StrictFloat
 
-from rag.db.vector import Point
 
+try:
+    from rag.db.vector import Point
+except ModuleNotFoundError:
+    from db.vector import Point
 
 class Encoder:
     def __init__(self) -> None:
@@ -18,11 +21,11 @@ class Encoder:
     def __encode(self, prompt: str) -> List[StrictFloat]:
         return list(ollama.embeddings(model=self.model, prompt=prompt)["embedding"])
 
-    def encode_document(self, chunks: List[Document]) -> List[Point]:
+    def encode_document(self, chunks: Iterator[Document]) -> List[Point]:
         log.debug("Encoding document...")
         return [
             Point(
-                id=str(uuid4()),
+                id=uuid4().hex,
                 vector=self.__encode(chunk.page_content),
                 payload={"text": chunk.page_content},
             )

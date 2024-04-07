@@ -15,9 +15,8 @@ class Generator:
     def __init__(self) -> None:
         self.model = os.environ["GENERATOR_MODEL"]
 
-    def __metaprompt(self, role: str, prompt: Prompt) -> str:
+    def __metaprompt(self, prompt: Prompt) -> str:
         metaprompt = (
-            f"You are a {role}.\n"
             "Answer the following question using the provided context.\n"
             "If you can't find the answer, do not pretend you know it,"
             'but answer "I don\'t know".\n\n'
@@ -28,7 +27,7 @@ class Generator:
         )
         return metaprompt
 
-    def generate(self, prompt: Prompt, role: str) -> str:
+    def generate(self, prompt: Prompt) -> str:
         log.debug("Generating answer...")
-        metaprompt = self.__metaprompt(role, prompt)
+        metaprompt = self.__metaprompt(prompt)
         return ollama.generate(model=self.model, prompt=metaprompt)

@@ -1,28 +1,24 @@
 import os
 from pathlib import Path
-from typing import Iterator, Optional
+from typing import Iterator
 
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain_core.documents import Document
 from langchain_community.document_loaders.parsers.pdf import (
     PyPDFParser,
 )
-from rag.db.document import DocumentDB
+from langchain_community.document_loaders.blob_loaders import Blob
 
 
-class PDF:
+class PDFParser:
     def __init__(self) -> None:
-        self.db = DocumentDB()
         self.parser = PyPDFParser(password=None, extract_images=False)
 
-    def from_data(self, blob) -> Optional[Iterator[Document]]:
-        if self.db.add(blob):
-            yield from self.parser.parse(blob)
-        yield None
+    def from_data(self, blob: Blob) -> Iterator[Document]:
+        yield from self.parser.parse(blob)
 
-    def from_path(self, file_path: Path) -> Optional[Iterator[Document]]:
-        blob = Blob.from_path(file_path)
-        from_data(blob)
+    def from_path(self, path: Path) -> Iterator[Document]:
+        return Blob.from_path(path)
 
     def chunk(self, content: Iterator[Document]):
         splitter = RecursiveCharacterTextSplitter(

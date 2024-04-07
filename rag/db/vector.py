@@ -50,6 +50,9 @@ class VectorDB:
     def search(self, query: List[float], limit: int = 4) -> List[ScoredPoint]:
         log.debug("Searching for vectors...")
         hits = self.client.search(
-            collection_name=self.collection_name, query_vector=query, limit=limit
+            collection_name=self.collection_name,
+            query_vector=query,
+            limit=limit,
+            score_threshold=0.6,
         )
         return hits

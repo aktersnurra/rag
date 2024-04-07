@@ -1,6 +1,7 @@
 import hashlib
 import os
 
+from langchain_community.document_loaders.blob_loaders import Blob
 import psycopg
 from loguru import logger as log
 
@@ -26,11 +27,11 @@ class DocumentDB:
             cur.execute(TABLES)
             self.conn.commit()
 
-    def __hash(self, blob: bytes) -> str:
+    def __hash(self, blob: Blob) -> str:
         log.debug("Hashing document...")
-        return hashlib.sha256(blob).hexdigest()
+        return hashlib.sha256(blob.as_bytes()).hexdigest()
 
-    def add(self, blob: bytes) -> bool:
+    def add(self, blob: Blob) -> bool:
         with self.conn.cursor() as cur:
             hash = self.__hash(blob)
             cur.execute(

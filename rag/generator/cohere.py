@@ -1,13 +1,12 @@
 import os
-from typing import Any, Generator
-import cohere
-
 from dataclasses import asdict
+from typing import Any, Generator
 
-from .prompt import Prompt
-from .abstract import AbstractGenerator
-
+import cohere
 from loguru import logger as log
+
+from .abstract import AbstractGenerator
+from .prompt import Prompt
 
 
 class Cohere(metaclass=AbstractGenerator):

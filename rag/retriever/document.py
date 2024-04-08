@@ -1,8 +1,8 @@
 import hashlib
 import os
 
-from langchain_community.document_loaders.blob_loaders import Blob
 import psycopg
+from langchain_community.document_loaders.blob_loaders import Blob
 from loguru import logger as log
 
 TABLES = """

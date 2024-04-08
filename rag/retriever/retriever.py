@@ -1,12 +1,13 @@
+from io import BytesIO
 from pathlib import Path
-from typing import Optional, List
+from typing import List, Optional
+
 from loguru import logger as log
 
-from io import BytesIO
 from .document import DocumentDB
 from .encoder import Encoder
 from .parser.pdf import PDFParser
-from .vector import VectorDB, Document
+from .vector import Document, VectorDB
 
 
 class Retriever:

@@ -1,8 +1,8 @@
 from typing import Type
 
 from .abstract import AbstractGenerator
-from .ollama import Ollama
 from .cohere import Cohere
+from .ollama import Ollama
 
 MODELS = ["ollama", "cohere"]
 

@@ -3,11 +3,11 @@ from pathlib import Path
 from typing import List, Optional
 
 from langchain.text_splitter import RecursiveCharacterTextSplitter
-from langchain_core.documents import Document
+from langchain_community.document_loaders.blob_loaders import Blob
 from langchain_community.document_loaders.parsers.pdf import (
     PyPDFParser,
 )
-from langchain_community.document_loaders.blob_loaders import Blob
+from langchain_core.documents import Document
 
 
 class PDFParser:

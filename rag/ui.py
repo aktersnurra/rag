@@ -1,12 +1,10 @@
 import streamlit as st
-
+from dotenv import load_dotenv
 from langchain_community.document_loaders.blob_loaders import Blob
 
-from dotenv import load_dotenv
-from rag.generator import get_generator, MODELS
+from rag.generator import MODELS, get_generator
 from rag.generator.prompt import Prompt
 from rag.retriever.retriever import Retriever
-
 
 if __name__ == "__main__":
     load_dotenv()

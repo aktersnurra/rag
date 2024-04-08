@@ -4,10 +4,10 @@ from typing import Any, Generator, List
 import ollama
 from loguru import logger as log
 
-from .prompt import Prompt
-from .abstract import AbstractGenerator
-
 from rag.retriever.vector import Document
+
+from .abstract import AbstractGenerator
+from .prompt import Prompt
 
 SYSTEM_PROMPT = (
     "# System Preamble"

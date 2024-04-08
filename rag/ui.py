@@ -4,8 +4,8 @@ from langchain_community.document_loaders.blob_loaders import Blob
 
 from dotenv import load_dotenv
 from rag.generator import get_generator, MODELS
-from generator.prompt import Prompt
-from retriever.retriever import Retriever
+from rag.generator.prompt import Prompt
+from rag.retriever.retriever import Retriever
 
 
 if __name__ == "__main__":

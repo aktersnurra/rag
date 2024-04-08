@@ -7,10 +7,7 @@ from loguru import logger as log
 from .prompt import Prompt
 from .abstract import AbstractGenerator
 
-try:
-    from rag.retriever.vector import Document
-except ModuleNotFoundError:
-    from retriever.vector import Document
+from rag.retriever.vector import Document
 
 SYSTEM_PROMPT = (
     "# System Preamble"

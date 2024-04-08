@@ -19,6 +19,7 @@ python-dotenv = "^1.0.1"
 qdrant-client = "^1.8.2"
 loguru = "^0.7.2"
 streamlit = "^1.33.0"
+cohere = "^5.2.3"
 
 
 [build-system]

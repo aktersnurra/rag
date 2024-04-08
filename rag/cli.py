@@ -22,7 +22,7 @@ if __name__ == "__main__":
                 if query:
                     result = rag.retrive(query)
                     print("Answer: \n")
-                    print(result.answer)
+                    print(result.answer + "\n")
             case _:
                 print("Invalid option!")
 

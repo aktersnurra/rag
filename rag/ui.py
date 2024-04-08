@@ -12,7 +12,7 @@ if __name__ == "__main__":
     ss = st.session_state
     st.header("Retrieval Augmented Generation")
 
-    model = st.selectbox("Model", options=MODELS)
+    model = st.selectbox("Generative Model", options=MODELS)
 
     files = st.file_uploader(
         "Choose pdfs to add to the knowledge base",

@@ -1,6 +1,6 @@
 import os
 from pathlib import Path
-from typing import Iterator, List, Optional
+from typing import List, Optional
 
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain_core.documents import Document
@@ -14,14 +14,14 @@ class PDFParser:
     def __init__(self) -> None:
         self.parser = PyPDFParser(password=None, extract_images=False)
 
-    def from_data(self, blob: Blob) -> Iterator[Document]:
+    def from_data(self, blob: Blob) -> List[Document]:
         return self.parser.parse(blob)
 
-    def from_path(self, path: Path) -> Iterator[Document]:
+    def from_path(self, path: Path) -> Blob:
         return Blob.from_path(path)
 
     def chunk(
-        self, document: Iterator[Document], source: Optional[str] = None
+        self, document: List[Document], source: Optional[str] = None
     ) -> List[Document]:
         splitter = RecursiveCharacterTextSplitter(
             chunk_size=int(os.environ["CHUNK_SIZE"]),

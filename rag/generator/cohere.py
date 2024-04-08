@@ -3,14 +3,14 @@ from typing import Any, Generator
 import cohere
 
 from dataclasses import asdict
-try:
-    from rag.llm.ollama_generator import Prompt
-except ModuleNotFoundError:
-    from llm.ollama_generator import Prompt
+
+from .prompt import Prompt
+from .abstract import AbstractGenerator
+
 from loguru import logger as log
 
 
-class CohereGenerator:
+class Cohere(metaclass=AbstractGenerator):
     def __init__(self) -> None:
         self.client = cohere.Client(os.environ["COHERE_API_KEY"])
 

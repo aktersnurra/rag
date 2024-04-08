@@ -388,7 +388,7 @@ files = [
 [[package]]
 name = "cffi"
 version = "1.16.0"
-description = "Foreign Function Interface for Python calling C code."
+description = "Foreign Function AbstractGenerator for Python calling C code."
 optional = false
 python-versions = ">=3.8"
 files = [

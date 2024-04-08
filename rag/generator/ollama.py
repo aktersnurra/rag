@@ -1,21 +1,16 @@
 import os
-from dataclasses import dataclass
 from typing import Any, Generator, List
 
 import ollama
 from loguru import logger as log
 
+from .prompt import Prompt
+from .abstract import AbstractGenerator
+
 try:
-    from rag.db.vector import Document
+    from rag.retriever.vector import Document
 except ModuleNotFoundError:
-    from db.vector import Document
-
-
-@dataclass
-class Prompt:
-    query: str
-    documents: List[Document]
-
+    from retriever.vector import Document
 
 SYSTEM_PROMPT = (
     "# System Preamble"
@@ -28,7 +23,7 @@ SYSTEM_PROMPT = (
 )
 
 
-class OllamaGenerator:
+class Ollama(metaclass=AbstractGenerator):
     def __init__(self) -> None:
         self.model = os.environ["GENERATOR_MODEL"]
 
@@ -72,5 +67,5 @@ class OllamaGenerator:
         metaprompt = self.__metaprompt(prompt)
         for chunk in ollama.generate(
             model=self.model, prompt=metaprompt, system=SYSTEM_PROMPT, stream=True
-            ):
-            yield chunk
+        ):
+            yield chunk["response"]

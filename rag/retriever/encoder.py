@@ -8,11 +8,7 @@ from langchain_core.documents import Document
 from loguru import logger as log
 from qdrant_client.http.models import StrictFloat
 
-
-try:
-    from rag.db.vector import Point
-except ModuleNotFoundError:
-    from db.vector import Point
+from .vector import Point
 
 
 class Encoder:

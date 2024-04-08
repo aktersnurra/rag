@@ -25,4 +25,3 @@ if __name__ == "__main__":
                     print(result.answer + "\n")
             case _:
                 print("Invalid option!")
-

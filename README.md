@@ -24,9 +24,17 @@ DOCUMENT_DB_USER = <DOCUMENT_DB_USER>
 
 QDRANT_URL = <QDRANT_URL>
 QDRANT_COLLECTION_NAME = <QDRANT_COLLECTION_NAME>
+
+COHERE_API_KEY = <COHERE_API_KEY> # OPTIONAL
 ```
 
-### Ollama 
+### Ollama
+
+Make sure ollama is running:
+
+```sh
+ollama serve
+```
 
 Download the encoder and generator models with ollama:
 
@@ -43,18 +51,40 @@ Download and run qdrant.
 
 ### Postgres
 
-Postgres is used to save hashes of the document chunks to prevent document chunks from 
+Postgres is used to save hashes of the document chunks to prevent document chunks from
 being added to the vector db more than ones.
 
 Download and run qdrant.
 
-#### Running
+### Cohere
 
-Build script/or FE for adding pdfs or retrieve information
+Get an API from their website.
 
-### Frontend (Low priority)
+### Running
 
-[streamlit](https://github.com/streamlit/streamlit)
+#### Prerequisites
+
+##### Python Environment
+
+Activate the poetry shell:
+
+```sh
+poetry shell
+```
+
+#### CLI
+
+```sh
+python rag/cli.py
+```
+
+#### UI
+
+Run the web app with streamlit:
+
+```sh
+streamlit run rag/ui.py
+```
 
 ### Notes
 
@@ -68,3 +98,5 @@ I took some inspiration from these tutorials.
 [rag-openai-qdrant](https://colab.research.google.com/github/qdrant/examples/blob/master/rag-openai-qdrant/rag-openai-qdrant.ipynb)
 
 [building-rag-application-using-langchain-openai-faiss](https://medium.com/@solidokishore/building-rag-application-using-langchain-openai-faiss-3b2af23d98ba)
+
+[knowledge_gpt](https://github.com/mmz-001/knowledge_gpt)

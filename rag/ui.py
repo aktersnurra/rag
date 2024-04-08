@@ -39,7 +39,6 @@ if __name__ == "__main__":
         )
         submit = st.form_submit_button("Generate")
 
-    (b,) = st.columns(1)
     (result_column, context_column) = st.columns(2)
 
     if submit and model:

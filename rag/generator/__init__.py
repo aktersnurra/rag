@@ -4,6 +4,7 @@ from .abstract import AbstractGenerator
 from .ollama import Ollama
 from .cohere import Cohere
 
+MODELS = ["ollama", "cohere"]
 
 def get_generator(model: str) -> Type[AbstractGenerator]:
     match model:

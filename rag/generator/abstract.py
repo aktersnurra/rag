@@ -1,11 +1,11 @@
-from abc import ABC, abstractmethod
+from abc import abstractmethod
 
 from typing import Any, Generator
 
 from .prompt import Prompt
 
 
-class AbstractGenerator(ABC, type):
+class AbstractGenerator(type):
     _instances = {}
 
     def __call__(cls, *args, **kwargs):

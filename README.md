@@ -93,7 +93,7 @@ in the same process.
 
 ### Inspiration
 
-I took some inspiration from these tutorials.
+I took some inspiration from these tutorials:
 
 [rag-openai-qdrant](https://colab.research.google.com/github/qdrant/examples/blob/master/rag-openai-qdrant/rag-openai-qdrant.ipynb)
 

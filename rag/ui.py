@@ -3,7 +3,7 @@ import streamlit as st
 from langchain_community.document_loaders.blob_loaders import Blob
 
 from dotenv import load_dotenv
-from generator import get_generator, MODELS
+from rag.generator import get_generator, MODELS
 from generator.prompt import Prompt
 from retriever.retriever import Retriever
 
@@ -65,4 +65,4 @@ if __name__ == "__main__":
         with result_column:
             generator = get_generator(model)
             st.markdown("### Answer")
-            st.write_stream(generator.generate(generator, prompt))
+            st.write_stream(generator.generate(prompt))

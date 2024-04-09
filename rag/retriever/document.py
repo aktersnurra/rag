@@ -7,14 +7,17 @@ from loguru import logger as log
 
 TABLES = """
 CREATE TABLE IF NOT EXISTS document (
-        hash text PRIMARY KEY)
+        hash VARCHAR(64) PRIMARY KEY)
 """
 
 
 class DocumentDB:
     def __init__(self) -> None:
         self.conn = psycopg.connect(
-            f"dbname={os.environ['DOCUMENT_DB_NAME']} user={os.environ['DOCUMENT_DB_USER']}"
+            (
+                f"dbname={os.environ['DOCUMENT_DB_NAME']} "
+                f"user={os.environ['DOCUMENT_DB_USER']}"
+            )
         )
         self.__configure()
 
@@ -36,7 +39,7 @@ class DocumentDB:
             hash = self.__hash(blob)
             cur.execute(
                 """
-                        SELECT * FROM document 
+                        SELECT * FROM document
                         WHERE
                         hash = %s
                         """,
@@ -47,8 +50,8 @@ class DocumentDB:
                 log.debug("Inserting document hash into documents db...")
                 cur.execute(
                     """
-                            INSERT INTO document 
-                            (hash) VALUES 
+                            INSERT INTO document
+                            (hash) VALUES
                             (%s)
                             """,
                     (hash,),

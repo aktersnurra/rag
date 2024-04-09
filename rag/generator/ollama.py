@@ -26,7 +26,7 @@ class Ollama(metaclass=AbstractGenerator):
 
     def __context(self, documents: List[Document]) -> str:
         results = [
-            f"Document: {i}\ntitle: {doc.title}\n{doc.text}"
+            f"Document: {i}\ntitle: {doc.title}\ntext: {doc.text}"
             for i, doc in enumerate(documents)
         ]
         return "\n".join(results)
@@ -60,7 +60,7 @@ class Ollama(metaclass=AbstractGenerator):
         return metaprompt
 
     def generate(self, prompt: Prompt) -> Generator[Any, Any, Any]:
-        log.debug("Generating answer...")
+        log.debug("Generating answer with ollama...")
         metaprompt = self.__metaprompt(prompt)
         for chunk in ollama.generate(
             model=self.model, prompt=metaprompt, system=SYSTEM_PROMPT, stream=True

@@ -40,7 +40,7 @@ class VectorDB:
                 vectors_config=VectorParams(size=self.dim, distance=Distance.COSINE),
             )
         else:
-            log.debug(f"Collection {self.collection_name} already exists...")
+            log.debug(f"Collection {self.collection_name} already exists!")
 
     def add(self, points: List[Point]):
         log.debug(f"Inserting {len(points)} vectors into the vector db...")

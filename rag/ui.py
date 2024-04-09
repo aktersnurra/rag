@@ -60,11 +60,7 @@ if __name__ == "__main__":
 
     (result_column, context_column) = st.columns(2)
 
-    if submit:
-        if not query:
-            st.stop()
-
-        query = ss.get("query", "")
+    if submit and query:
         with st.spinner("Searching for documents..."):
             documents = retriever.retrieve(query)
 

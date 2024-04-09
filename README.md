@@ -1,6 +1,6 @@
 # Retrieval Augmented Generation
 
-RAG with ollama and qdrant.
+RAG with ollama (and optionally cohere) and qdrant.
 
 ## Usage
 
@@ -45,13 +45,13 @@ ollama pull $ENCODER_MODEL
 
 ### Qdrant
 
-Qdrant will is used to store the embeddings of the chunks from the documents.
+Qdrant is used to store the embeddings of the chunks from the documents.
 
 Download and run qdrant.
 
 ### Postgres
 
-Postgres is used to save hashes of the document chunks to prevent document chunks from
+Postgres is used to save hashes of the document to prevent documents from
 being added to the vector db more than ones.
 
 Download and run qdrant.

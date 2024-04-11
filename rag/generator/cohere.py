@@ -6,7 +6,7 @@ import cohere
 from loguru import logger as log
 
 from .abstract import AbstractGenerator
-from .prompt import Prompt
+from .prompt import ANSWER_INSTRUCTION, Prompt
 
 
 class Cohere(metaclass=AbstractGenerator):
@@ -15,8 +15,9 @@ class Cohere(metaclass=AbstractGenerator):
 
     def generate(self, prompt: Prompt) -> Generator[Any, Any, Any]:
         log.debug("Generating answer from cohere")
+        query = f"{prompt.query}\n\n{ANSWER_INSTRUCTION}"
         for event in self.client.chat_stream(
-            message=prompt.query,
+            message=query,
             documents=[asdict(d) for d in prompt.documents],
             prompt_truncation="AUTO",
         ):

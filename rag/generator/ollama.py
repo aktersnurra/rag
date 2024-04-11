@@ -7,7 +7,7 @@ from loguru import logger as log
 from rag.retriever.vector import Document
 
 from .abstract import AbstractGenerator
-from .prompt import Prompt
+from .prompt import ANSWER_INSTRUCTION, Prompt
 
 
 class Ollama(metaclass=AbstractGenerator):
@@ -23,13 +23,11 @@ class Ollama(metaclass=AbstractGenerator):
 
     def __metaprompt(self, prompt: Prompt) -> str:
         metaprompt = (
-            "Answer the question based only on the following context:"
+            "Answer the question based only on the following context:\n"
             "<context>\n"
             f"{self.__context(prompt.documents)}\n\n"
             "</context>\n"
-            "Given the context information and not prior knowledge, answer the question."
-            "If the context is irrelevant to the question, answer that you do not know "
-            "the answer to the question given the context.\n"
+            f"{ANSWER_INSTRUCTION}"
             f"Question: {prompt.query.strip()}\n\n"
             "Answer:"
         )

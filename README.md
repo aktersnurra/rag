@@ -1,6 +1,7 @@
 # Retrieval Augmented Generation
 
-RAG with ollama (and optionally cohere) and qdrant.
+RAG with ollama (and optionally cohere) and qdrant. This is basically a glorified 
+ctrl+f.
 
 ## Usage
 

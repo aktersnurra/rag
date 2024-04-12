@@ -7,7 +7,7 @@ ctrl+f.
 
 ### Setup
 
-#### Environment Variables
+#### 1. Environment Variables
 
 Create a .env file or set the following parameters:
 
@@ -29,7 +29,7 @@ QDRANT_COLLECTION_NAME = <QDRANT_COLLECTION_NAME>
 COHERE_API_KEY = <COHERE_API_KEY> # OPTIONAL
 ```
 
-### Ollama
+### 2. Ollama
 
 Make sure ollama is running:
 
@@ -44,28 +44,28 @@ ollama pull $GENERATOR_MODEL
 ollama pull $ENCODER_MODEL
 ```
 
-### Qdrant
+### 3. Qdrant
 
 Qdrant is used to store the embeddings of the chunks from the documents.
 
 Download and run qdrant.
 
-### Postgres
+### 4. Postgres
 
 Postgres is used to save hashes of the document to prevent documents from
 being added to the vector db more than ones.
 
 Download and run qdrant.
 
-### Cohere
+### 5. Cohere
 
 Get an API from their website.
 
-### Running
+### 6. Running
 
-#### Prerequisites
+#### 6.1 Prerequisites
 
-##### Python Environment
+##### 6.2 Python Environment
 
 Activate the poetry shell:
 
@@ -73,19 +73,25 @@ Activate the poetry shell:
 poetry shell
 ```
 
-#### CLI
+#### 6.3 CLI
+
+Run the cli with:
 
 ```sh
 python rag/cli.py
 ```
 
-#### UI
+#### 6.4 UI
 
 Run the web app with streamlit:
 
 ```sh
 streamlit run rag/ui.py
 ```
+
+#### 6.5 Upload Multiple Documents
+
+tbc
 
 ### Notes
 

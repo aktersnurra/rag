@@ -32,19 +32,30 @@ def upload(files):
 if __name__ == "__main__":
     load_dotenv()
     retriever = load_retriever()
-    ss = st.session_state
+
+    with st.sidebar:
+        st.header("Grouding")
+        st.markdown(
+            (
+                "These files will be uploaded to the knowledge base and used "
+                "as groudning if they are relevant to the question."
+            )
+        )
+
+        files = st.file_uploader(
+            "Choose pdfs to add to the knowledge base",
+            type="pdf",
+            accept_multiple_files=True,
+        )
+
+        upload(files)
+
+        st.header("Generative Model")
+        st.markdown("Select the model that will be used for generating the answer.")
+        model = st.selectbox("Generative Model", options=MODELS)
+        generator = load_generator(model)
+
     st.title("Retrieval Augmented Generation")
-
-    model = st.selectbox("Generative Model", options=MODELS)
-    generator = load_generator(model)
-
-    files = st.file_uploader(
-        "Choose pdfs to add to the knowledge base",
-        type="pdf",
-        accept_multiple_files=True,
-    )
-
-    upload(files)
 
     with st.form(key="query"):
         query = st.text_area(

@@ -1,7 +1,7 @@
 # Retrieval Augmented Generation
 
-RAG with ollama (and optionally cohere) and qdrant. This is basically a glorified 
-ctrl+f.
+RAG with ollama (and optionally cohere) and qdrant. This is basically a glorified
+(bloated) `ctrl+f`.
 
 ## Usage
 
@@ -65,7 +65,9 @@ Get an API from their website.
 
 #### 6.1 Prerequisites
 
-##### 6.2 Python Environment
+Both databases needs to be running as well as ollama.
+
+##### 6.1.1 Python Environment
 
 Activate the poetry shell:
 
@@ -91,7 +93,11 @@ streamlit run rag/ui.py
 
 #### 6.5 Upload Multiple Documents
 
-tbc
+To upload an entire directory (and subdirectories) of pdfs, simply run:
+
+```sh
+python rag/upload.py -d <PATH-TO-DIR-WITH-PDFS>
+```
 
 ### Notes
 

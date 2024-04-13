@@ -388,7 +388,7 @@ files = [
 [[package]]
 name = "cffi"
 version = "1.16.0"
-description = "Foreign Function AbstractGenerator for Python calling C code."
+description = "Foreign Function Interface for Python calling C code."
 optional = false
 python-versions = ">=3.8"
 files = [
@@ -4161,4 +4161,4 @@ multidict = ">=4.0"
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.11"
-content-hash = "44ec0d87aaee06d7909d51fceddf741a2f6d971b3de9309089b3d154abfe518d"
+content-hash = "28d2833cd03e06191ab01107031fa972a6955c76385eac763141406ff92df2c5"

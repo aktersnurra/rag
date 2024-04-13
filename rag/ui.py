@@ -2,10 +2,10 @@ from dataclasses import dataclass
 from enum import Enum
 from typing import Dict, List
 
-from loguru import logger as log
 import streamlit as st
 from dotenv import load_dotenv
 from langchain_community.document_loaders.blob_loaders import Blob
+from loguru import logger as log
 
 from rag.generator import MODELS, get_generator
 from rag.generator.prompt import Prompt
@@ -46,9 +46,9 @@ def set_chat_users():
         ss.bot = Ollama.BOT.value
 
 
-def clear_messages():
-    log.debug("Clearing llm chat history")
-    st.session_state.messages = []
+def clear_generator_messages():
+    log.debug("Clearing generator chat history")
+    st.session_state.generator_messages = []
 
 
 @st.cache_resource
@@ -62,17 +62,66 @@ def load_generator(client: str):
     log.debug("Loading generator model")
     st.session_state.generator = get_generator(client)
     set_chat_users()
-    clear_messages()
+    clear_generator_messages()
 
 
 @st.cache_data(show_spinner=False)
 def upload(files):
-    with st.spinner("Indexing documents..."):
-        retriever = st.session_state.retriever
+    retriever = st.session_state.retriever
+    with st.spinner("Uploading documents..."):
         for file in files:
             source = file.name
             blob = Blob.from_data(file.read())
             retriever.add_pdf(blob=blob, source=source)
+
+
+def display_context(documents: List[Document]):
+    with st.popover("See Context"):
+        for i, doc in enumerate(documents):
+            st.markdown(f"### Document {i}")
+            st.markdown(f"**Title: {doc.title}**")
+            st.markdown(doc.text)
+            st.markdown("---")
+
+
+def display_chat():
+    ss = st.session_state
+    for msg in ss.chat:
+        if isinstance(msg, list):
+            display_context(msg)
+        else:
+            st.chat_message(msg.role).write(msg.message)
+
+
+def generate_chat(query: str):
+    ss = st.session_state
+
+    with st.chat_message(ss.user):
+        st.write(query)
+
+    retriever = ss.retriever
+    generator = ss.generator
+
+    documents = retriever.retrieve(query)
+    prompt = Prompt(query, documents)
+
+    with st.chat_message(ss.bot):
+        history = [m.as_dict(ss.client) for m in ss.generator_messages]
+        response = st.write_stream(generator.chat(prompt, history))
+
+    display_context(documents)
+    store_chat(query, response, documents)
+
+
+def store_chat(query: str, response: str, documents: List[Document]):
+    log.debug("Storing chat")
+    ss = st.session_state
+    query = Message(role=ss.user, message=query)
+    response = Message(role=ss.bot, message=response)
+    ss.chat.append(query)
+    ss.chat.append(response)
+    ss.generator_messages.append(response)
+    ss.chat.append(documents)
 
 
 def sidebar():
@@ -99,67 +148,16 @@ def sidebar():
         load_generator(st.session_state.client)
 
 
-def display_context(documents: List[Document]):
-    with st.popover("See Context"):
-        for i, doc in enumerate(documents):
-            st.markdown(f"### Document {i}")
-            st.markdown(f"**Title: {doc.title}**")
-            st.markdown(doc.text)
-            st.markdown("---")
-
-
-def display_chat():
-    ss = st.session_state
-    for msg in ss.chat:
-        if isinstance(msg, list):
-            display_context(msg)
-        else:
-            st.chat_message(msg.role).write(msg.message)
-
-
-def generate_chat(query: str):
-    ss = st.session_state
-    with st.chat_message(ss.user):
-        st.write(query)
-
-    retriever = ss.retriever
-    generator = ss.generator
-
-    with st.spinner("Searching for documents..."):
-        documents = retriever.retrieve(query)
-
-    prompt = Prompt(query, documents)
-
-    with st.chat_message(ss.bot):
-        history = [m.as_dict(ss.client) for m in ss.messages]
-        response = st.write_stream(generator.chat(prompt, history))
-    display_context(documents)
-    store_chat(query, response, documents)
-
-
-def store_chat(query: str, response: str, documents: List[Document]):
-    log.debug("Storing chat")
-    ss = st.session_state
-    query = Message(role=ss.user, message=query)
-    response = Message(role=ss.bot, message=response)
-    ss.chat.append(query)
-    ss.chat.append(response)
-    ss.messages.append(response)
-    ss.chat.append(documents)
-
-
 def page():
     ss = st.session_state
-
-    if "messages" not in st.session_state:
-        ss.messages = []
+    if "generator_messages" not in st.session_state:
+        ss.generator_messages = []
     if "chat" not in st.session_state:
         ss.chat = []
 
     display_chat()
 
     query = st.chat_input("Enter query here")
-
     if query:
         generate_chat(query)
 

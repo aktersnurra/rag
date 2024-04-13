@@ -1,5 +1,5 @@
 from abc import abstractmethod
-from typing import Any, Generator
+from typing import Any, Dict, Generator, List
 
 from .prompt import Prompt
 
@@ -15,4 +15,10 @@ class AbstractGenerator(type):
 
     @abstractmethod
     def generate(self, prompt: Prompt) -> Generator[Any, Any, Any]:
+        pass
+
+    @abstractmethod
+    def chat(
+        self, prompt: Prompt, messages: List[Dict[str, str]]
+    ) -> Generator[Any, Any, Any]:
         pass

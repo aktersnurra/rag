@@ -102,7 +102,7 @@ def generate_chat(query: str):
     retriever = ss.retriever
     generator = ss.generator
 
-    documents = retriever.retrieve(query)
+    documents = retriever.retrieve(query, limit=5)
     prompt = Prompt(query, documents)
 
     with st.chat_message(ss.bot):

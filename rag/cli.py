@@ -28,7 +28,7 @@ def rag(generator: str, query: str, limit):
     for chunk in generator.generate(prompt):
         print(chunk, end="", flush=True)
 
-    print(f"\n\n")
+    print("\n\n")
     for i, doc in enumerate(documents):
         print(f"### Document {i}")
         print(f"**Title: {doc.title}**")
@@ -65,7 +65,21 @@ def rag(generator: str, query: str, limit):
     type=click.Path(exists=True),
     default=None,
 )
-def main(query: Optional[str], generator: str, limit: int, directory: Optional[str]):
+@click.option("-v", "--verbose", count=True)
+def main(
+    query: Optional[str], generator: str, limit: int, directory: Optional[str], verbose
+):
+    match verbose:
+        case 1:
+            level = "INFO"
+        case 2:
+            level = "DEBUG"
+        case 3:
+            level = "TRACE"
+        case _:
+            level = "ERROR"
+    log.remove()
+    log.add(lambda msg: tqdm.write(msg, end=""), colorize=True, level=level)
     if query:
         rag(generator, query, limit)
     elif directory:
@@ -75,7 +89,5 @@ def main(query: Optional[str], generator: str, limit: int, directory: Optional[s
 
 
 if __name__ == "__main__":
-    log.remove()
-    log.add(lambda msg: tqdm.write(msg, end=""), colorize=True)
     load_dotenv()
     main()

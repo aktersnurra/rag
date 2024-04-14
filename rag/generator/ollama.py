@@ -13,6 +13,7 @@ from .prompt import ANSWER_INSTRUCTION, Prompt
 class Ollama(metaclass=AbstractGenerator):
     def __init__(self) -> None:
         self.model = os.environ["GENERATOR_MODEL"]
+        log.debug(f"Using {self.model} for generator...")
 
     def __context(self, documents: List[Document]) -> str:
         results = [
@@ -39,7 +40,9 @@ class Ollama(metaclass=AbstractGenerator):
         for chunk in ollama.generate(model=self.model, prompt=metaprompt, stream=True):
             yield chunk["response"]
 
-    def chat(self, prompt: Prompt, messages: List[Dict[str, str]]) -> Generator[Any, Any, Any]:
+    def chat(
+        self, prompt: Prompt, messages: List[Dict[str, str]]
+    ) -> Generator[Any, Any, Any]:
         log.debug("Generating answer with ollama...")
         metaprompt = self.__metaprompt(prompt)
         messages.append({"role": "user", "content": metaprompt})

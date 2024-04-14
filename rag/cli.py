@@ -1,8 +1,10 @@
 from pathlib import Path
+from typing import Optional
 
 import click
 from dotenv import load_dotenv
 from loguru import logger as log
+from tqdm import tqdm
 
 from rag.generator import get_generator
 from rag.generator.prompt import Prompt
@@ -37,6 +39,7 @@ def rag(generator: str, query: str, limit):
 @click.option(
     "-q",
     "--query",
+    prompt_required=False,
     help="The query for rag",
     prompt="Enter your query",
 )
@@ -62,7 +65,7 @@ def rag(generator: str, query: str, limit):
     type=click.Path(exists=True),
     default=None,
 )
-def main(query: str, generator: str, limit: int, directory: str):
+def main(query: Optional[str], generator: str, limit: int, directory: Optional[str]):
     if query:
         rag(generator, query, limit)
     elif directory:
@@ -72,5 +75,7 @@ def main(query: str, generator: str, limit: int, directory: str):
 
 
 if __name__ == "__main__":
+    log.remove()
+    log.add(lambda msg: tqdm.write(msg, end=""), colorize=True)
     load_dotenv()
     main()

@@ -91,14 +91,6 @@ Run the web app with streamlit:
 streamlit run rag/ui.py
 ```
 
-#### 6.5 Upload Multiple Documents
-
-To upload an entire directory (and subdirectories) of pdfs, simply run:
-
-```sh
-python rag/upload.py -d <PATH-TO-DIR-WITH-PDFS>
-```
-
 ### Notes
 
 Yes, it is inefficient/dumb to use ollama when you can just load the models with python

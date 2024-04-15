@@ -11,6 +11,20 @@ from rag.generator.prompt import Prompt
 from rag.retriever.retriever import Retriever
 
 
+def configure_logging(verbose: int):
+    match verbose:
+        case 1:
+            level = "INFO"
+        case 2:
+            level = "DEBUG"
+        case 3:
+            level = "TRACE"
+        case _:
+            level = "ERROR"
+    log.remove()
+    log.add(lambda msg: tqdm.write(msg, end=""), colorize=True, level=level)
+
+
 def upload(directory: str):
     log.info(f"Uploading pfs found in directory {directory}...")
     retriever = Retriever()
@@ -69,17 +83,7 @@ def rag(generator: str, query: str, limit):
 def main(
     query: Optional[str], generator: str, limit: int, directory: Optional[str], verbose
 ):
-    match verbose:
-        case 1:
-            level = "INFO"
-        case 2:
-            level = "DEBUG"
-        case 3:
-            level = "TRACE"
-        case _:
-            level = "ERROR"
-    log.remove()
-    log.add(lambda msg: tqdm.write(msg, end=""), colorize=True, level=level)
+    configure_logging(verbose)
     if query:
         rag(generator, query, limit)
     elif directory:

@@ -79,16 +79,26 @@ def rag(generator: str, query: str, limit):
     type=click.Path(exists=True),
     default=None,
 )
+@click.option(
+    "-q",
+    "--query",
+    prompt_required=False,
+    help="The query for rag",
+    prompt="Enter your query",
+)
 @click.option("-v", "--verbose", count=True)
 def main(
-    query: Optional[str], generator: str, limit: int, directory: Optional[str], verbose
+    query: Optional[str],
+    generator: str,
+    limit: int,
+    directory: Optional[str],
+    verbose: int,
 ):
     configure_logging(verbose)
+    if directory:
+        upload(directory)
     if query:
         rag(generator, query, limit)
-    elif directory:
-        upload(directory)
-    # TODO: truncate databases
     # TODO: maybe add override for models
 
 

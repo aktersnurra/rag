@@ -39,12 +39,3 @@ class Ollama(metaclass=AbstractGenerator):
         metaprompt = self.__metaprompt(prompt)
         for chunk in ollama.generate(model=self.model, prompt=metaprompt, stream=True):
             yield chunk["response"]
-
-    def chat(
-        self, prompt: Prompt, messages: List[Dict[str, str]]
-    ) -> Generator[Any, Any, Any]:
-        log.debug("Generating answer with ollama...")
-        metaprompt = self.__metaprompt(prompt)
-        messages.append({"role": "user", "content": metaprompt})
-        for chunk in ollama.chat(model=self.model, messages=messages, stream=True):
-            yield chunk["message"]["content"]

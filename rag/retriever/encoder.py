@@ -39,5 +39,6 @@ class Encoder:
 
     def encode_query(self, query: str) -> List[StrictFloat]:
         log.debug(f"Encoding query: {query}")
-        query = self.query_prompt + query
+        if self.model == "mxbai-embed-large":
+            query = self.query_prompt + query
         return self.__encode(query)

@@ -34,6 +34,16 @@ class DocumentDB:
         log.debug("Hashing document...")
         return hashlib.sha256(blob.as_bytes()).hexdigest()
 
+    def delete_all(self):
+        with self.conn.cursor() as cur:
+            cur.execute(
+                """
+                        TRUNCATE TABLE
+                        document
+                        """
+            )
+            self.conn.commit()
+
     def add(self, blob: Blob) -> bool:
         with self.conn.cursor() as cur:
             hash = self.__hash(blob)

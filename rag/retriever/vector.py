@@ -22,7 +22,7 @@ class Document:
 
 
 class VectorDB:
-    def __init__(self, score_threshold: float = 0.6):
+    def __init__(self, score_threshold: float = 0.5):
         self.dim = int(os.environ["EMBEDDING_DIM"])
         self.collection_name = os.environ["QDRANT_COLLECTION_NAME"]
         self.client = QdrantClient(url=os.environ["QDRANT_URL"])
@@ -41,6 +41,10 @@ class VectorDB:
             )
         else:
             log.debug(f"Collection {self.collection_name} already exists!")
+
+    def delete_collection(self):
+        log.info(f"Deleting collection {self.collection_name}")
+        self.client.delete_collection(self.collection_name)
 
     def add(self, points: List[Point]):
         log.debug(f"Inserting {len(points)} vectors into the vector db...")

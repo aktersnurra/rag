@@ -4,9 +4,9 @@ from typing import List
 from rag.retriever.vector import Document
 
 ANSWER_INSTRUCTION = (
-    "Given the context information and not prior knowledge, answer the question."
-    "If the context is irrelevant to the question or empty, then do not attempt to answer "
-    "the question, just reply that you do not know based on the context provided.\n"
+    "Given the context information and not prior knowledge, answer the query."
+    "If the context is irrelevant to the query or empty, then do not attempt to answer "
+    "the query, just reply that you do not know based on the context provided.\n"
 )
 
 

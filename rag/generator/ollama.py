@@ -24,12 +24,14 @@ class Ollama(metaclass=AbstractGenerator):
 
     def __metaprompt(self, prompt: Prompt) -> str:
         metaprompt = (
-            f"{ANSWER_INSTRUCTION}"
-            "Only the information between <results>...</results> should be used to answer the question.\n"
-            f"Question: {prompt.query.strip()}\n\n"
-            "<results>\n"
+            "Context information is below.\n"
+            "---------------------\n"
             f"{self.__context(prompt.documents)}\n\n"
-            "</results>\n"
+            "---------------------\n"
+            f"{ANSWER_INSTRUCTION}"
+            "Do not attempt to answer the query without relevant context and do not use"
+            " prior knowledge or training data!\n"
+            f"Query: {prompt.query.strip()}\n\n"
             "Answer:"
         )
         return metaprompt

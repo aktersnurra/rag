@@ -16,7 +16,3 @@ class AbstractGenerator(type):
     @abstractmethod
     def generate(self, prompt: Prompt) -> Generator[Any, Any, Any]:
         pass
-
-    @abstractmethod
-    def rerank(self, prompt: Prompt) -> Prompt:
-        return prompt

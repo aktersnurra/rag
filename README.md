@@ -12,21 +12,27 @@ RAG with ollama (and optionally cohere) and qdrant. This is basically a glorifie
 Create a .env file or set the following parameters:
 
 ```.env
-CHUNK_SIZE = <CHUNK_SIZE>
-CHUNK_OVERLAP = <CHUNK_OVERLAP>
+CHUNK_SIZE = 4096
+CHUNK_OVERLAP = 256
 
-ENCODER_MODEL = <ENCODER_MODEL>
-EMBEDDING_DIM = <EMBEDDING_DIM>
+ENCODER_MODEL = "nomic-embed-text"
+EMBEDDING_DIM = 768
+RETRIEVER_TOP_K = 15
+RETRIEVER_SCORE_THRESHOLD = 0.5
 
-GENERATOR_MODEL = <GENERATOR_MODEL>
+RERANK_MODEL = "mixedbread-ai/mxbai-rerank-large-v1"
+RERANK_TOP_K = 5
 
-DOCUMENT_DB_NAME = <DOCUMENT_DB_NAME>
-DOCUMENT_DB_USER = <DOCUMENT_DB_USER>
+GENERATOR_MODEL = "dolphin-llama3"
 
-QDRANT_URL = <QDRANT_URL>
-QDRANT_COLLECTION_NAME = <QDRANT_COLLECTION_NAME>
+DOCUMENT_DB_NAME = "rag"
+DOCUMENT_DB_USER = "aktersnurra"
+
+QDRANT_URL = "http://localhost:6333"
+QDRANT_COLLECTION_NAME = "knowledge-base"
 
 COHERE_API_KEY = <COHERE_API_KEY> # OPTIONAL
+COHERE_RERANK_MODEL = "rerank-english-v3.0"
 ```
 
 ### 2. Ollama

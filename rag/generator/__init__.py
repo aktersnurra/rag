@@ -4,11 +4,11 @@ from .abstract import AbstractGenerator
 from .cohere import Cohere
 from .ollama import Ollama
 
-MODELS = ["ollama", "cohere"]
+MODELS = ["local", "cohere"]
 
 def get_generator(model: str) -> Type[AbstractGenerator]:
     match model:
-        case "ollama":
+        case "local":
             return Ollama()
         case "cohere":
             return Cohere()

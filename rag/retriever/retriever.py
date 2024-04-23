@@ -45,7 +45,7 @@ class Retriever:
         else:
             log.error("Invalid input!")
 
-    def retrieve(self, query: str, limit: int = 5) -> List[Document]:
+    def retrieve(self, query: str) -> List[Document]:
         log.debug(f"Finding documents matching query: {query}")
         query_emb = self.encoder.encode_query(query)
-        return self.vec_db.search(query_emb, limit)
+        return self.vec_db.search(query_emb)

@@ -22,6 +22,7 @@ streamlit = "^1.33.0"
 cohere = "^5.2.3"
 tqdm = "^4.66.2"
 click = "^8.1.7"
+sentence-transformers = "^2.7.0"
 
 
 [build-system]

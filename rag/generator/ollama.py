@@ -1,5 +1,5 @@
 import os
-from typing import Any, Dict, Generator, List
+from typing import Any, Generator, List
 
 import ollama
 from loguru import logger as log
@@ -24,12 +24,12 @@ class Ollama(metaclass=AbstractGenerator):
 
     def __metaprompt(self, prompt: Prompt) -> str:
         metaprompt = (
-            "Answer the question based only on the following context:\n"
-            "<context>\n"
-            f"{self.__context(prompt.documents)}\n\n"
-            "</context>\n"
             f"{ANSWER_INSTRUCTION}"
+            "Only the information between <results>...</results> should be used to answer the question.\n"
             f"Question: {prompt.query.strip()}\n\n"
+            "<results>\n"
+            f"{self.__context(prompt.documents)}\n\n"
+            "</results>\n"
             "Answer:"
         )
         return metaprompt

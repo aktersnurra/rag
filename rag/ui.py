@@ -99,11 +99,13 @@ def generate_chat(query: str):
     documents = retriever.retrieve(query, limit=15)
     prompt = Prompt(query, documents)
 
+    prompt = generator.rerank(prompt)
+
     with st.chat_message(ss.bot):
         response = st.write_stream(generator.generate(prompt))
 
-    display_context(documents)
-    store_chat(query, response, documents)
+    display_context(prompt.documents)
+    store_chat(query, response, prompt.documents)
 
 
 def store_chat(query: str, response: str, documents: List[Document]):

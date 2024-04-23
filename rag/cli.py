@@ -37,13 +37,13 @@ def rag(generator: str, query: str, limit):
     retriever = Retriever()
     generator = get_generator(generator)
     documents = retriever.retrieve(query, limit=limit)
-    prompt = Prompt(query, documents)
+    prompt = generator.rerank(Prompt(query, documents))
     print("Answer: ")
     for chunk in generator.generate(prompt):
         print(chunk, end="", flush=True)
 
     print("\n\n")
-    for i, doc in enumerate(documents):
+    for i, doc in enumerate(prompt.documents):
         print(f"### Document {i}")
         print(f"**Title: {doc.title}**")
         print(doc.text)

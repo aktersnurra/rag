@@ -7,6 +7,7 @@ import ollama
 from langchain_core.documents import Document
 from loguru import logger as log
 from qdrant_client.http.models import StrictFloat
+from tqdm import tqdm
 
 from .vector import Point
 
@@ -34,7 +35,7 @@ class Encoder:
                     "source": self.__get_source(chunk.metadata),
                 },
             )
-            for chunk in chunks
+            for chunk in tqdm(chunks)
         ]
 
     def encode_query(self, query: str) -> List[StrictFloat]:

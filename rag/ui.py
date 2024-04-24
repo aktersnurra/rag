@@ -42,7 +42,6 @@ def load_retriever():
 def load_generator(model: str):
     log.debug("Loading generator model")
     st.session_state.generator = get_generator(model)
-    set_chat_users()
 
 
 # @st.cache_resource
@@ -113,7 +112,7 @@ def store_chat(query: str, response: str, documents: List[Document]):
 
 def sidebar():
     with st.sidebar:
-        st.header("Grouding")
+        st.header("Grounding")
         st.markdown(
             (
                 "These files will be uploaded to the knowledge base and used "
@@ -129,7 +128,7 @@ def sidebar():
 
         upload(files)
 
-        st.header("Generative Model")
+        st.header("Model")
         st.markdown(
             "Select the model that will be used for reranking and generating the answer."
         )

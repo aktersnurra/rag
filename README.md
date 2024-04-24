@@ -23,7 +23,7 @@ RETRIEVER_SCORE_THRESHOLD = 0.5
 RERANK_MODEL = "mixedbread-ai/mxbai-rerank-large-v1"
 RERANK_TOP_K = 5
 
-GENERATOR_MODEL = "dolphin-llama3"
+GENERATOR_MODEL = "llama3"
 
 DOCUMENT_DB_NAME = "rag"
 DOCUMENT_DB_USER = "aktersnurra"

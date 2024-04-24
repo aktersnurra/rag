@@ -6,7 +6,7 @@ from rag.retriever.retriever import Retriever
 
 
 def drop():
-    log.debug("Dropping documents")
+    log.debug("Deleting all data...")
     retriever = Retriever()
     doc_db = retriever.doc_db
     doc_db.delete_all()
@@ -14,6 +14,7 @@ def drop():
     vec_db.delete_collection()
 
 
+@click.command()
 @click.confirmation_option(prompt="Are you sure you want to drop the db?")
 def main():
     drop()

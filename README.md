@@ -1,7 +1,7 @@
 # Retrieval Augmented Generation
 
 RAG with ollama (and optionally cohere) and qdrant. This is basically a glorified
-(bloated) `ctrl+f`.
+(bloated) `grep`.
 
 ## Usage
 

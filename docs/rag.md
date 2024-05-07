@@ -26,6 +26,7 @@
 
 {pause up}
 
+{#rag}
 <center>
   <img src="https://qdrant.tech/articles_data/what-is-rag-in-ai/rag-system.jpg" alt="image" width="1024" height="auto">
 </center>
@@ -47,11 +48,8 @@ of good quality, e.g. the contents pages of a book
 </center>
 
 {pause up}
-{the attributes}
 
 # Reranker
-
-{pause left}
 
 <center>
 <img src="https://cdn.sanity.io/images/vr8gru94/production/906c3c0f8fe637840f134dbf966839ef89ac7242-3443x1641.png" alt="image" width="1024" height="auto">
@@ -59,6 +57,11 @@ of good quality, e.g. the contents pages of a book
 
 {pause up}
 
+A common reranking model is the cross encoder:
+
 <center>
-<img src="https://cdn.sanity.io/images/vr8gru94/production/4509817116ab72e27bae809c38cb48fbf1578b5d-2760x1420.png" alt="image" width="1024" height="auto">
+<img src="https://cdn.sanity.io/images/vr8gru94/production/9f0d2f75571bb58eecf2520a23d300a5fc5b1e2c-2440x1100.png" alt="image" width="1024" height="auto">
 </center>
+
+We plug this reranking model into the rag pipeline...
+{pause up-at-unpause=rag}

@@ -70,7 +70,7 @@ def rag(query: str, model: str, verbose: int):
     generator = get_generator(model)
     reranker = get_reranker(model)
     documents = retriever.retrieve(query)
-    prompt = reranker.rerank(Prompt(query, documents))
+    prompt = reranker.rank(Prompt(query, documents))
     print("Answer: ")
     for chunk in generator.generate(prompt):
         print(chunk, end="", flush=True)
@@ -94,7 +94,6 @@ def drop():
     vec_db.delete_collection()
 
 
-cli.add_command(configure_logging)
 cli.add_command(rag)
 cli.add_command(upload)
 cli.add_command(drop)

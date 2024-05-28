@@ -101,7 +101,9 @@ in the same process.
 ### TODO
 
 -[ ] Rerank history if it is relevant.
+
 -[ ] message ollama/cohere
+
 -[ ] create db script
 
 ### Inspiration

@@ -13,18 +13,6 @@ from rag.retriever.retriever import Retriever
 from rag.retriever.vector import Document
 
 
-@dataclass
-class Message:
-    role: str
-    message: str
-
-    def as_dict(self, model: str) -> Dict[str, str]:
-        if model == "cohere":
-            return {"role": self.role, "message": self.message}
-        else:
-            return {"role": self.role, "content": self.message}
-
-
 def set_chat_users():
     log.debug("Setting user and bot value")
     ss = st.session_state
@@ -38,13 +26,11 @@ def load_retriever():
     st.session_state.retriever = Retriever()
 
 
-# @st.cache_resource
 def load_generator(model: str):
     log.debug("Loading generator model")
     st.session_state.generator = get_generator(model)
 
 
-# @st.cache_resource
 def load_reranker(model: str):
     log.debug("Loading reranker model")
     st.session_state.reranker = get_reranker(model)

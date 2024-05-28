@@ -98,6 +98,12 @@ streamlit run rag/ui.py
 Yes, it is inefficient/dumb to use ollama when you can just load the models with python
 in the same process.
 
+### TODO
+
+-[ ] Rerank history if it is relevant.
+-[ ] message ollama/cohere
+-[ ] create db script
+
 ### Inspiration
 
 I took some inspiration from these tutorials:

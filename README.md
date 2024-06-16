@@ -106,6 +106,10 @@ in the same process.
 
 -[ ] create db script
 
+-[ ] write a general model for cli/ui
+
+-[ ] use huggingface like ollama
+
 ### Inspiration
 
 I took some inspiration from these tutorials:

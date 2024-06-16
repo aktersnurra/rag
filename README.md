@@ -100,15 +100,15 @@ in the same process.
 
 ### TODO
 
--[ ] Rerank history if it is relevant.
+- [ ] Rerank history if it is relevant.
 
--[ ] message ollama/cohere
+- [ ] message ollama/cohere
 
--[ ] create db script
+- [ ] create db script
 
--[ ] write a general model for cli/ui
+- [ ] write a general model for cli/ui
 
--[ ] use huggingface like ollama
+- [ ] use huggingface like ollama
 
 ### Inspiration
 

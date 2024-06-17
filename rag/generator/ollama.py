@@ -4,10 +4,10 @@ from typing import Any, Generator, List
 import ollama
 from loguru import logger as log
 
-from rag.retriever.vector import Document
+from rag.rag import Message
 
 from .abstract import AbstractGenerator
-from .prompt import ANSWER_INSTRUCTION, Prompt
+from .prompt import Prompt
 
 
 class Ollama(metaclass=AbstractGenerator):
@@ -15,29 +15,13 @@ class Ollama(metaclass=AbstractGenerator):
         self.model = os.environ["GENERATOR_MODEL"]
         log.debug(f"Using {self.model} for generator...")
 
-    def __context(self, documents: List[Document]) -> str:
-        results = [
-            f"Document: {i}\ntitle: {doc.title}\ntext: {doc.text}"
-            for i, doc in enumerate(documents)
-        ]
-        return "\n".join(results)
-
-    def __metaprompt(self, prompt: Prompt) -> str:
-        metaprompt = (
-            "Context information is below.\n"
-            "---------------------\n"
-            f"{self.__context(prompt.documents)}\n\n"
-            "---------------------\n"
-            f"{ANSWER_INSTRUCTION}"
-            "Do not attempt to answer the query without relevant context and do not use"
-            " prior knowledge or training data!\n"
-            f"Query: {prompt.query.strip()}\n\n"
-            "Answer:"
-        )
-        return metaprompt
-
-    def generate(self, prompt: Prompt, memory: Memory) -> Generator[Any, Any, Any]:
+    def generate(
+        self, prompt: Prompt, messages: List[Message]
+    ) -> Generator[Any, Any, Any]:
         log.debug("Generating answer with ollama...")
-        metaprompt = self.__metaprompt(prompt)
-        for chunk in ollama.chat(model=self.model, messages=memory.append(metaprompt), stream=True):
+        messages = messages.append(
+            Message(role="user", content=prompt.to_str(), client="ollama")
+        )
+        messages = [m.as_dict() for m in messages]
+        for chunk in ollama.chat(model=self.model, messages=messages, stream=True):
             yield chunk["response"]

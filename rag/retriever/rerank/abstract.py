@@ -1,6 +1,8 @@
 from abc import abstractmethod
+from typing import List
 
-from rag.generator.prompt import Prompt
+from rag.memory import Message
+from rag.retriever.vector import Document
 
 
 class AbstractReranker(type):
@@ -13,5 +15,9 @@ class AbstractReranker(type):
         return cls._instances[cls]
 
     @abstractmethod
-    def rank(self, prompt: Prompt) -> Prompt:
-        return prompt
+    def rerank_documents(self, query: str, documents: List[Document]) -> List[Document]:
+        pass
+
+    @abstractmethod
+    def rerank_messages(self, query: str, messages: List[Message]) -> List[Message]:
+        pass

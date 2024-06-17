@@ -65,7 +65,8 @@ def generate_chat(query: str):
         st.write(query)
 
     rag = ss.rag
-    prompt = rag.retrieve(query)
+    documents = rag.retrieve(query)
+    Prompt(query, documents, self.client)
     with st.chat_message(ss.bot):
         response = st.write_stream(rag.generate(query))
 

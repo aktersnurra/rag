@@ -4,7 +4,7 @@ from typing import List
 import cohere
 from loguru import logger as log
 
-from rag.rag import Message
+from rag.message import Message
 from rag.retriever.rerank.abstract import AbstractReranker
 from rag.retriever.vector import Document
 
@@ -35,11 +35,11 @@ class CohereReranker(metaclass=AbstractReranker):
 
 
     def rerank_messages(self, query: str, messages: List[Message]) -> List[Message]:
-        response = self.model.rank(
+        response = self.client.rerank(
+            model="rerank-english-v3.0",
             query=query,
-            documents=[m.message for m in messages],
-            return_documents=False,
-            top_k=self.top_k,
+            documents=[m.content for m in messages],
+            top_n=self.top_k,
         )
         ranking = list(
             filter(

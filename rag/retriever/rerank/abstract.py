@@ -1,7 +1,7 @@
 from abc import abstractmethod
 from typing import List
 
-from rag.memory import Message
+from rag.message import Message
 from rag.retriever.vector import Document
 
 

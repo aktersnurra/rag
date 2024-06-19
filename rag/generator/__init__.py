@@ -1,8 +1,8 @@
 from typing import Type
 
-from .abstract import AbstractGenerator
-from .cohere import Cohere
-from .ollama import Ollama
+from rag.generator.abstract import AbstractGenerator
+from rag.generator.cohere import Cohere
+from rag.generator.ollama import Ollama
 
 MODELS = ["local", "cohere"]
 

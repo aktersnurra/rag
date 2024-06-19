@@ -15,7 +15,7 @@ ANSWER_INSTRUCTION = (
 class Prompt:
     query: str
     documents: List[Document]
-    generator_model: str
+    client: str
 
     def __context(self, documents: List[Document]) -> str:
         results = [
@@ -25,17 +25,15 @@ class Prompt:
         return "\n".join(results)
 
     def to_str(self) -> str:
-        if self.generator_model == "cohere":
+        if self.client == "cohere":
             return f"{self.query}\n\n{ANSWER_INSTRUCTION}"
         else:
             return (
                 "Context information is below.\n"
-                "---------------------\n"
+                "---\n"
                 f"{self.__context(self.documents)}\n\n"
-                "---------------------\n"
+                "---\n"
                 f"{ANSWER_INSTRUCTION}"
-                "Do not attempt to answer the query without relevant context and do not use"
-                " prior knowledge or training data!\n"
                 f"Query: {self.query.strip()}\n\n"
                 "Answer:"
             )

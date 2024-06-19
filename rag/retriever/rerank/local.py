@@ -2,7 +2,7 @@ import os
 from typing import List
 
 from loguru import logger as log
-from rag.rag import Message
+from rag.message import Message
 from rag.retriever.vector import Document
 from sentence_transformers import CrossEncoder
 

@@ -1,9 +1,8 @@
 from abc import abstractmethod
-from typing import Any, Generator
+from typing import Any, Generator, List
 
-from rag.rag import Message
-
-from .prompt import Prompt
+from rag.message import Message
+from rag.retriever.vector import Document
 
 
 class AbstractGenerator(type):
@@ -16,7 +15,5 @@ class AbstractGenerator(type):
         return cls._instances[cls]
 
     @abstractmethod
-    def generate(
-        self, prompt: Prompt, messages: List[Message]
-    ) -> Generator[Any, Any, Any]:
+    def generate(self, messages: List[Message], documents: List[Document]) -> Generator[Any, Any, Any]:
         pass

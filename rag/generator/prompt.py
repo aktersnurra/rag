@@ -29,11 +29,13 @@ class Prompt:
             return f"{self.query}\n\n{ANSWER_INSTRUCTION}"
         else:
             return (
-                "Context information is below.\n"
+                "<|begin_of_text|><|start_header_id|>user<|end_header_id|>\n"
+                "Using the information contained in the context, give a comprehensive answer to the question.\n"
+                "If the answer cannot be deduced from the context, do not give an answer.\n\n"
+                "Context:\n"
                 "---\n"
                 f"{self.__context(self.documents)}\n\n"
                 "---\n"
-                f"{ANSWER_INSTRUCTION}"
-                f"Query: {self.query.strip()}\n\n"
-                "Answer:"
+                f"Question: {self.query}<|eot_id|>\n"
+                "<|start_header_id|>assistant<|end_header_id|>\n\n"
             )

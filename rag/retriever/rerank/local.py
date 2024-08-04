@@ -2,16 +2,16 @@ import os
 from typing import List
 
 from loguru import logger as log
-from rag.message import Message
-from rag.retriever.vector import Document
 from sentence_transformers import CrossEncoder
 
+from rag.message import Message
 from rag.retriever.rerank.abstract import AbstractReranker
+from rag.retriever.vector import Document
 
 
 class Reranker(metaclass=AbstractReranker):
     def __init__(self) -> None:
-        self.model = CrossEncoder(os.environ["RERANK_MODEL"])
+        self.model = CrossEncoder(os.environ["RERANK_MODEL"], device="cpu")
         self.top_k = int(os.environ["RERANK_TOP_K"])
         self.relevance_threshold = float(os.environ["RETRIEVER_RELEVANCE_THRESHOLD"])
 
@@ -33,7 +33,7 @@ class Reranker(metaclass=AbstractReranker):
     def rerank_messages(self, query: str, messages: List[Message]) -> List[Message]:
         results = self.model.rank(
             query=query,
-            documents=[m.message for m in messages],
+            documents=[m.content for m in messages],
             return_documents=False,
             top_k=self.top_k,
         )

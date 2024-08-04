@@ -1,7 +1,7 @@
+import hashlib
 import os
 from pathlib import Path
 from typing import Dict, List
-from uuid import uuid4
 
 import ollama
 from langchain_core.documents import Document
@@ -28,7 +28,9 @@ class Encoder:
         log.debug("Encoding document...")
         return [
             Point(
-                id=uuid4().hex,
+                id=hashlib.sha256(
+                    chunk.page_content.encode(encoding="utf-8")
+                ).hexdigest(),
                 vector=self.__encode(chunk.page_content),
                 payload={
                     "text": chunk.page_content,

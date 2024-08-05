@@ -1,0 +1,10 @@
+#!/bin/sh
+
+pg_ctl start -D ~/projects/rag/data/postgres -l ~/projects/rag/data/postgres/server.log
+
+pidof qdrant 1>/dev/null && echo "qdrant already running..." || (
+  cd ~/projects/rag/data/qdrant
+  qdrant &
+)
+pidof ollama 1>/dev/null && echo "ollama already running..." || ollama serve &
+exit 0

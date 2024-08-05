@@ -1,0 +1,4 @@
+#!/bin/sh
+
+pidof ollama | xargs -r kill
+pidof qdrant | xargs -r kill

@@ -71,8 +71,8 @@ def rag(client: str, verbose: int):
 
         rag.add_message(rag.bot, response)
 
-        show_context = input("Display context? [y/n] ").lower() == "y"
-        print("\n\n")
+        show_context = input("\nDisplay context? [y/n] ").lower() == "y"
+        print("\n")
         if show_context:
             for i, doc in enumerate(prompt.documents):
                 print(f"### Document {i}")

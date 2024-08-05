@@ -100,15 +100,17 @@ in the same process.
 
 ### TODO
 
-- [ ] Rerank history if it is relevant.
+- [x] Rerank history if it is relevant.
 
-- [ ] message ollama/cohere
+- [x] message ollama/cohere
 
-- [ ] create db script
+- [x] create db script
 
-- [ ] write a general model for cli/ui
+- [x] write a general model for cli/ui
 
-- [ ] use huggingface like ollama
+- [ ] use huggingface instead of ollama
+
+- [ ] Refactor messages
 
 ### Inspiration
 
@@ -117,5 +119,4 @@ I took some inspiration from these tutorials:
 [rag-openai-qdrant](https://colab.research.google.com/github/qdrant/examples/blob/master/rag-openai-qdrant/rag-openai-qdrant.ipynb)
 
 [building-rag-application-using-langchain-openai-faiss](https://medium.com/@solidokishore/building-rag-application-using-langchain-openai-faiss-3b2af23d98ba)
-
 [knowledge_gpt](https://github.com/mmz-001/knowledge_gpt)

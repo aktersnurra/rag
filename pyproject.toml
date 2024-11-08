@@ -1,30 +1,35 @@
-[tool.poetry]
+[tool.pdm.build]
+includes = [
+    "rag",
+]
+[build-system]
+requires = ["pdm-backend"]
+build-backend = "pdm.backend"
+
+
+[project]
+authors = [
+    {name = "Gustaf Rydholm", email = "gustaf.rydholm@gmail.com"},
+]
+requires-python = "<4.0,>=3.12"
+dependencies = [
+    "ollama<1.0.0,>=0.3.1",
+    "langchain-community<1.0.0,>=0.0.31",
+    "langchain<1.0.0,>=0.1.14",
+    "jupyterlab-vim<5.0.0,>=4.1.3",
+    "pypdf<5.0.0,>=4.1.0",
+    "numpy<2.0.0,>=1.26.4",
+    "psycopg<4.0.0,>=3.1.18",
+    "python-dotenv<2.0.0,>=1.0.1",
+    "qdrant-client<2.0.0,>=1.8.2",
+    "loguru<1.0.0,>=0.7.2",
+    "cohere<6.0.0,>=5.2.3",
+    "tqdm<5.0.0,>=4.66.2",
+    "click<9.0.0,>=8.1.7",
+    "sentence-transformers<3.0.0,>=2.7.0",
+    "textual<1.0.0,>=0.83.0",
+]
 name = "rag"
 version = "0.1.0"
 description = ""
-authors = ["Gustaf Rydholm <gustaf.rydholm@gmail.com>"]
 readme = "README.md"
-packages = [{include = "rag"}]
-
-[tool.poetry.dependencies]
-python = "^3.11"
-ollama = "^0.3.1"
-langchain-community = "^0.0.31"
-langchain = "^0.1.14"
-jupyterlab-vim = "^4.1.3"
-pypdf = "^4.1.0"
-numpy = "^1.26.4"
-psycopg = "^3.1.18"
-python-dotenv = "^1.0.1"
-qdrant-client = "^1.8.2"
-loguru = "^0.7.2"
-streamlit = "^1.33.0"
-cohere = "^5.2.3"
-tqdm = "^4.66.2"
-click = "^8.1.7"
-sentence-transformers = "^2.7.0"
-
-
-[build-system]
-requires = ["poetry-core"]
-build-backend = "poetry.core.masonry.api"

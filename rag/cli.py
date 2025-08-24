@@ -7,6 +7,7 @@ from tqdm import tqdm
 
 from rag.generator.prompt import Prompt
 from rag.model import Rag
+from rag.retriever.retriever import FilePath
 from rag.retriever.retriever import Retriever
 
 
@@ -38,13 +39,13 @@ def cli():
     default=None,
 )
 @click.option("-v", "--verbose", count=True)
-def upload(directory: str, verbose: int):
+def index(directory: str, verbose: int):
     configure_logging(verbose)
     log.info(f"Uploading pfs found in directory {directory}...")
     retriever = Retriever()
     pdfs = Path(directory).glob("**/*.pdf")
     for path in tqdm(list(pdfs)):
-        retriever.add_pdf(path=path)
+        retriever.index(FilePath(path))
 
 
 @click.command()
@@ -56,7 +57,7 @@ def upload(directory: str, verbose: int):
     help="Generator and rerank model",
 )
 @click.option("-v", "--verbose", count=True)
-def rag(client: str, verbose: int):
+def search(client: str, verbose: int):
     configure_logging(verbose)
     rag = Rag(client)
     while True:
@@ -92,8 +93,8 @@ def drop():
     vec_db.delete_collection()
 
 
-cli.add_command(rag)
-cli.add_command(upload)
+cli.add_command(search)
+cli.add_command(index)
 cli.add_command(drop)
 
 if __name__ == "__main__":

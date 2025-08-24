@@ -44,7 +44,7 @@ class DocumentDB:
             )
             self.conn.commit()
 
-    def add(self, blob: Blob) -> bool:
+    def create(self, blob: Blob) -> bool:
         with self.conn.cursor() as cur:
             hash = self.__hash(blob)
             cur.execute(

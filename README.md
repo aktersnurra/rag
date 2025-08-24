@@ -108,11 +108,19 @@ in the same process.
 
 - [x] write a general model for cli/ui
 
-- [ ] use huggingface instead of ollama
+- [ ] ~~use huggingface instead of ollama~~
+  - Huggingface is too slow...
 
 - [ ] Refactor messages
 
+- [ ] Rewrite in functional style
+
+- [ ] Try out nemotron-mini
+
+- [ ] Try out llama3-chatqa
+
 ### Inspiration
+
 
 I took some inspiration from these tutorials:
 

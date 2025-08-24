@@ -8,8 +8,10 @@ from langchain_community.document_loaders.parsers.pdf import (
     PyPDFParser,
 )
 from langchain_core.documents import Document
+from rag.retriever.encoder import Chunks
 
 
+# TODO: fix the PDFParser, remove langchain
 class PDFParser:
     def __init__(self) -> None:
         self.parser = PyPDFParser(password=None, extract_images=False)
@@ -22,7 +24,7 @@ class PDFParser:
 
     def chunk(
         self, document: List[Document], source: Optional[str] = None
-    ) -> List[Document]:
+    ) -> Chunks:
         splitter = RecursiveCharacterTextSplitter(
             chunk_size=int(os.environ["CHUNK_SIZE"]),
             chunk_overlap=int(os.environ["CHUNK_OVERLAP"]),
@@ -31,4 +33,4 @@ class PDFParser:
         if source is not None:
             for c in chunks:
                 c.metadata["source"] = source
-        return chunks
+        return Chunks(chunks)

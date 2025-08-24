@@ -1,0 +1,48 @@
+#rag {
+    background: #151515;
+    color: #E1E1E1;
+    height: auto;
+    width: 100%;
+    margin: 0 0 2 0;
+    grid-size: 2 2;
+}
+
+#history {
+  scrollbar-size: 1 1;
+  height: 80%;
+}
+
+#output {
+  height: 100%;
+}
+
+#chat {
+  border: round #373737;
+  padding: 1;
+  margin-top: 2;
+  margin-right: 2;
+}
+
+#input {
+  height: 20%;
+  dock: bottom;
+}
+
+#references {
+  scrollbar-size: 1 1;
+  dock: right;
+  border-left: solid #373737;
+  height: 100%;
+  width: 20%;
+}
+
+Input {
+    dock: bottom;
+    align_horizontal: center;
+    width: 90%;
+    height: 10%;
+    background: #202020;
+    color: #E1E1E1;
+    border: round #373737;
+}
+

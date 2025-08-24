@@ -1,0 +1,20 @@
+* TODO Fix TUI
+Use textual lib for tui
+
+* TODO Late chunking
+- Use transformer library to do late chunking
+  - encode text with jina
+  - chunk
+  - mean pool
+- Create query vector by doing mean pool algorithm
+
+* TODO MCP
+Understand the client server relation ship?
+- Find files on computer
+- Add tags to files, e.g. directories
+- search for tags
+- search in vectordb
+- load chapter
+- open pdf
+- search web?
+

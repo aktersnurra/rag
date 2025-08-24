@@ -1,10 +1,11 @@
-from typing import Any, Generator, List
+from typing import Any, Generator, List, Optional
 
 from loguru import logger as log
 
 from rag.generator import get_generator
 from rag.generator.prompt import Prompt
-from rag.message import Message
+from rag.message import Message, Messages
+from rag.retriever.encoder import Query
 from rag.retriever.rerank import get_reranker
 from rag.retriever.retriever import Retriever
 from rag.retriever.vector import Document
@@ -21,6 +22,7 @@ class Rag:
         self.generator = get_generator(self.client)
         self.__set_roles()
 
+    # TODO: move this to messages
     def __set_roles(self):
         self.bot = "assistant" if self.client == "local" else "CHATBOT"
         self.user = "user" if self.client == "local" else "USER"
@@ -34,21 +36,21 @@ class Rag:
         self.__reset_messages()
         log.debug(f"Swapped client to {self.client}")
 
-    def __reset_messages(self):
-        log.debug("Deleting messages...")
-        self.messages = []
-
-    def retrieve(self, query: str) -> List[Document]:
-        documents = self.retriever.retrieve(query)
+    def retrieve(self, query: Query) -> List[Document]:
+        documents = self.retriever.search(query)
         log.info(f"Found {len(documents)} relevant documents")
-        return self.reranker.rerank_documents(query, documents)
+        return self.reranker.rerank(query, documents)
 
+    # TODO: move this to messages
     def add_message(self, role: str, content: str):
         self.messages.append(Message(role=role, content=content, client=self.client))
 
-    def generate(self, prompt: Prompt) -> Generator[Any, Any, Any]:
-        if self.messages:
-            messages = self.reranker.rerank_messages(prompt.query, self.messages)
+    # TODO: fix the reranking
+    def generate(
+        self, prompt: Prompt, messages: Optional[Messages] = None
+    ) -> Generator[Any, Any, Any]:
+        if messages:
+            messages = self.reranker.rerank(prompt.query, self.messages)
         else:
             messages = []
         messages.append(

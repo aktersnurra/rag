@@ -4,10 +4,8 @@ from typing import List
 from rag.retriever.vector import Document
 
 ANSWER_INSTRUCTION = (
-    "Do not attempt to answer the query without relevant context, and do not use "
-    "prior knowledge or training data!\n"
-    "If the context does not contain the answer or is empty, only reply that you "
-    "cannot answer the query given the context."
+    "Using the information contained in the context, give a comprehensive answer to the question.\n"
+    "If the answer cannot be deduced from the context, do not give an answer.\n\n"
 )
 
 
@@ -30,8 +28,7 @@ class Prompt:
         else:
             return (
                 "<|begin_of_text|><|start_header_id|>user<|end_header_id|>\n"
-                "Using the information contained in the context, give a comprehensive answer to the question.\n"
-                "If the answer cannot be deduced from the context, do not give an answer.\n\n"
+                f"{ANSWER_INSTRUCTION}"
                 "Context:\n"
                 "---\n"
                 f"{self.__context(self.documents)}\n\n"

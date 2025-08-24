@@ -23,11 +23,13 @@ dependencies = [
     "python-dotenv<2.0.0,>=1.0.1",
     "qdrant-client<2.0.0,>=1.8.2",
     "loguru<1.0.0,>=0.7.2",
-    "cohere<6.0.0,>=5.2.3",
     "tqdm<5.0.0,>=4.66.2",
     "click<9.0.0,>=8.1.7",
     "sentence-transformers<3.0.0,>=2.7.0",
     "textual<1.0.0,>=0.83.0",
+    "transformers>=4.46.2",
+    "mcp[cli]>=1.13.1",
+    "pydantic>=2.11.7",
 ]
 name = "rag"
 version = "0.1.0"
